@@ -27,11 +27,27 @@ class FuncionarioController extends Controller{
         return $options;
         
     }
+    public function deleteFunc($id){
+       
+        if($this->funcionarios->find($id)->delete()){
+            $return ['error'] = false;
+            $return ['icon'] = 'success';
+            $return ['msg'] = 'Deletado com sucesso';
+        }else{
+            $return ['error'] = true;
+            $return ['icon'] = 'error';
+            $return ['msg'] = 'Erro ao deletar funcionário';
+
+        }
+        echo json_encode($return);
+        
+
+    }
     public function salvarFunc(Request $request){
         //dd($request);
         
         if(isset($request->id)){
-            if($this->funcionarios->where('id', $request->id)->update($request->all())){
+            if($this->funcionarios->find($request->id)->update($request->all())){
                 $return ['error'] = false;
                 $return ['icon'] = 'success';
                 $return ['msg'] = 'atualizado com sucesso';

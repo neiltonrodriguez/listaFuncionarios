@@ -18,3 +18,4 @@ use App\Http\Controllers\FuncionarioController;
 Route::get('/funcionarios', [FuncionarioController::class, 'index'])->name('funcionarios');
 Route::get('/funcionarios/get', [FuncionarioController::class, 'getFunc'])->name('funcionariosGet');
 Route::post('/funcionarios/salvar', [FuncionarioController::class, 'salvarFunc'])->name('funcionariosSalvar');
+Route::get('/funcionarios/delete/{id}', [FuncionarioController::class, 'deleteFunc'])->name('funcionariosDelete');

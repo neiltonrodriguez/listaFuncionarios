@@ -15,8 +15,8 @@
 </head>
 <body>
 <div id="app">
-  <div class="container-sm">
-  <button @click="abrirModal()" type="button" class="btn btn-success">Novo Funcinário</button>
+  <div class="container-sm mt-3">
+  <button @click="abrirModal()" type="button" class="btn btn-primary">Novo Funcinário</button>
     <table class="table">
       <thead>
         <th>COD</th>
@@ -34,7 +34,8 @@
           <td>@{{ f.email }}</td>
           <td v-for="x in funcoes" v-if="x.id == f.funcionalidade_id">@{{ x.nome }}</td>
           <td>
-            <buton type="button" @click="abrirModal(f)" class="btn btn-success">edit</button>
+            <button type="button" @click="abrirModal(f)" class="btn btn-success">edit</button>
+            <button type="button" @click="deleteFunc(f.id)" class="btn btn-danger">delete</button>
           </td>
         </tr>
         
@@ -70,6 +71,20 @@
                 })
                 
             },
+            async deleteFunc(id){
+              if (confirm("Deseja excluir?")) {
+              await axios.get('funcionarios/delete/' + id).then((r) => {
+                this.getFunc();
+                Swal.fire({
+                            
+                            icon: r.data.icon,
+                            title: r.data.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+              })
+            }
+            },
             async salvarFunc() {
                 await axios.post("{{ route('funcionariosSalvar') }}", this.form)
                     .then((r) => {
@@ -78,7 +93,7 @@
                             
                        }
                        Swal.fire({
-                            position: 'top-end',
+                            
                             icon: r.data.icon,
                             title: r.data.msg,
                             showConfirmButton: false,
